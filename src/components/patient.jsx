@@ -1,10 +1,10 @@
 import { Button,Form,Message } from "semantic-ui-react";
-import content from "../ethereum/ether";
+import contract from "../ethereum/ether";
 import { useState } from "react";
 import { ethers } from "ethers";
 
 const Patient = () => {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState();
   const [patientIdValue,setPatientIdValue] =useState();
   const [patientId,setPatientId] =useState();
   const [loading, setLoading] = useState(false);
@@ -14,21 +14,27 @@ const Patient = () => {
   const [response1,setResponse1] = useState();
   const [response2,setResponse2] = useState();
 
+  // console.log(contract.signer.getAddress())
+
   const inputHandler=async (event)=>{
     event.preventDefault();
 
     setMessage(null);
     setLoading(true);
+
     try {
-    const accounts = await content.provider.getSigner().getAddress();
-        const temp = await content.contract.methods.viewRecords(patientId).send({
-            from: accounts[0],
-          });
+        const temp = await contract.viewRecords(+patientId);
+        console.log(temp);
+
+        const result = await temp.wait();
+        console.log(result);
+        console.log(temp.data.toString());
      setResponse1( e=>{
-        return e =temp;
+        return e = temp;
      });
     }catch (err) {
       setMessage(err.message);
+      console.log(err);
     }
     setLoading(false);
 
@@ -41,12 +47,15 @@ const Patient = () => {
     setLoading(true);
 
     try {
-      const accounts = await content.provider.getSigner().getAddress();
-        const temp =await content.contract.methods.transferAmount(patientIdValue).send({
-            from: accounts[0],
+        const temp =await contract.transferAmount(+patientIdValue,{
             value: ethers.utils.parseEther(input),
           })
-     setResponse2(e=>{return e= temp});
+          console.log(temp);
+
+          const result = await temp.wait();
+        console.log(result);
+        console.log(temp.data.toString());
+    //  setResponse2(e=>{return e= temp});
     } catch (err) {
       setMessage(err.message);
     }

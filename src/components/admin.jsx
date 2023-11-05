@@ -1,6 +1,6 @@
 import { Button, Form ,Message} from "semantic-ui-react";
 import { useState } from "react";
-import content from '../ethereum/ether';
+import contract from '../ethereum/ether';
 
 const Admin = () => {
     const [loading, setLoading]= useState(false);
@@ -16,8 +16,8 @@ const Admin = () => {
     const [billStatus,setBillStatus] = useState();
     const [dischargeStatus,setDischargeStatus] = useState();
 
-    // console.log(content.contract);
     
+    // console.log(content.contract.functions.storeDetails);
 
     const submitHandler = async(event)=>{
         event.preventDefault();
@@ -25,12 +25,8 @@ const Admin = () => {
         setMessage(null);
         setLoading(true);
 
-        //console.log(content.provider);
         try{         
-
-            const accounts = await content.provider.getSigner().getAddress();
-
-            await content.contract.methods.storeDetails(
+            await contract.storeDetails(
                 patientIdValue,       
                 patientNameValue,     
                 genderValue,          
@@ -38,27 +34,24 @@ const Admin = () => {
                 weightValue,          
                 disease,         
                 billValue,            
-                billStatus,     
-                dischargeStatus 
-            ).send({
-                from: accounts[0],
-            });
-
-                        
+                (billStatus  === 'false' ? false: true),     
+                (dischargeStatus==='false' ? false: true) 
+            )                        
         }catch(err){
             setMessage(err.message);
+            console.log('err came from here');
         }
         setLoading(false);
 
-        setPatientIdValue();
-        setPatientNameValue('');
-        setGenderValue('');
-        setHeightValue();
-        setWeightValue();
-        setBillStatus();
-        setDischargeStatus();
-        setBillValue();
-        setDisease('');
+        // setPatientIdValue('');
+        // setPatientNameValue('');
+        // setGenderValue('');
+        // setHeightValue('');
+        // setWeightValue('');
+        // setBillStatus('');
+        // setDischargeStatus('');
+        // setBillValue('');
+        // setDisease('');
 
     };
   return (
@@ -67,7 +60,7 @@ const Admin = () => {
       <Form onSubmit={submitHandler} error={!!message}>
         <Form.Field>
           <label>Patient ID</label>
-          <input placeholder="PateintID" value={patientIdValue} onChange={(event)=>{setPatientIdValue(e=>{return e = event.target.value;})}}/>
+          <input placeholder="PateintID" value={patientIdValue} onChange={(event)=>{setPatientIdValue(e=>{return e = +event.target.value;})}}/>
         </Form.Field>
 
         <Form.Field>
@@ -82,12 +75,12 @@ const Admin = () => {
 
         <Form.Field>
           <label>Height</label>
-          <input placeholder="Height" value={heightValue} onChange={(event)=>{setHeightValue(e=>{return e = event.target.value;})}}/>
+          <input placeholder="Height" value={heightValue} onChange={(event)=>{setHeightValue(e=>{return e = +event.target.value;})}}/>
         </Form.Field>
 
         <Form.Field>
           <label>Weight</label>
-          <input placeholder="Weight" value={weightValue} onChange={(event)=>{setWeightValue(e=>{return e = event.target.value;})}}/>
+          <input placeholder="Weight" value={weightValue} onChange={(event)=>{setWeightValue(e=>{return e = +event.target.value;})}}/>
         </Form.Field>
 
         <Form.Field>
@@ -97,7 +90,7 @@ const Admin = () => {
 
         <Form.Field>
           <label>Bill</label>
-          <input placeholder="Bill Amount" value={billValue} onChange={(event)=>{setBillValue(e=>{return e = event.target.value;})}}/>
+          <input placeholder="Bill Amount" value={billValue} onChange={(event)=>{setBillValue(e=>{return e = +event.target.value;})}}/>
         </Form.Field>
 
         <Form.Field>
@@ -107,7 +100,7 @@ const Admin = () => {
 
         <Form.Field>
           <label>DischargePending</label>
-          <input placeholder="True/False" value={dischargeStatus} onChange={(event)=>{setDischargeStatus(e=>{return e = event.target.value;})}}/>
+          <input placeholder="True/False" value={dischargeStatus} onChange={(event)=>{setDischargeStatus(e=>{return e = event.target.value ;})}}/>
         </Form.Field>
 
         <Button loading={loading} primary>Submit</Button>
