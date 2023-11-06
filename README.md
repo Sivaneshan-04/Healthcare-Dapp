@@ -32,4 +32,4 @@ Then run the deploy script by adding the rpcProvider url and using your private 
 
 Then get the address of the deployed contract and use it in the ether file and start building!!
 
-# Note: Remember to secure your rpcProvider url and your private key
+##### Note: Remember to secure your rpcProvider url and your private key
