@@ -16,9 +16,6 @@ const Admin = () => {
     const [billStatus,setBillStatus] = useState();
     const [dischargeStatus,setDischargeStatus] = useState();
 
-    
-    // console.log(content.contract.functions.storeDetails);
-
     const submitHandler = async(event)=>{
         event.preventDefault();
 
@@ -43,15 +40,15 @@ const Admin = () => {
         }
         setLoading(false);
 
-        // setPatientIdValue('');
-        // setPatientNameValue('');
-        // setGenderValue('');
-        // setHeightValue('');
-        // setWeightValue('');
-        // setBillStatus('');
-        // setDischargeStatus('');
-        // setBillValue('');
-        // setDisease('');
+        setPatientIdValue('');
+        setPatientNameValue('');
+        setGenderValue('');
+        setHeightValue('');
+        setWeightValue('');
+        setBillStatus('');
+        setDischargeStatus('');
+        setBillValue('');
+        setDisease('');
 
     };
   return (
@@ -95,12 +92,12 @@ const Admin = () => {
 
         <Form.Field>
           <label>BillPending</label>
-          <input placeholder="True/False" value={billStatus} onChange={(event)=>{setBillStatus(e=>{return e = event.target.value;})}}/>
+          <input placeholder="true/false" value={billStatus} onChange={(event)=>{setBillStatus(e=>{return e = event.target.value;})}}/>
         </Form.Field>
 
         <Form.Field>
           <label>DischargePending</label>
-          <input placeholder="True/False" value={dischargeStatus} onChange={(event)=>{setDischargeStatus(e=>{return e = event.target.value ;})}}/>
+          <input placeholder="true/false" value={dischargeStatus} onChange={(event)=>{setDischargeStatus(e=>{return e = event.target.value ;})}}/>
         </Form.Field>
 
         <Button loading={loading} primary>Submit</Button>

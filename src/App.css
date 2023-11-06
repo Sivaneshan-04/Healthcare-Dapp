@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  margin: 0% 25%;
 }
 
 .App-logo {
@@ -12,6 +11,23 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+header{
+  margin: 1%;
+  padding: 1%;
+  background-color: #61dafb;
+  border-radius: 15px;
+}
+.container{
+  margin: 0% 20%;
+
+}
+header button{
+  background-color: rgb(0, 255, 132);
+  color: white;
+  border-radius: 4px;
+  margin: auto 4%; 
+  padding: 10px;
 }
 
 .App-header {
